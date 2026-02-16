@@ -1,0 +1,16 @@
+<header class="navbar">
+  <div class="logo" routerLink="/">
+    🏷️ Tienda
+  </div>
+
+  <nav class="nav-links">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
+    <a routerLink="/catalogo" routerLinkActive="active">Catálogo</a>
+    <a routerLink="/pedidos" routerLinkActive="active">Pedidos</a>
+  </nav>
+
+  <div class="cart-widget" routerLink="/pedidos">
+    <span class="icon">🛒</span>
+    <span class="badge">{{ cartCount }}</span>
+  </div>
+</header>
