@@ -1,0 +1,13 @@
+<div class="catalog-container">
+  <div class="header">
+    <h2>Catálogo de Productos</h2>
+    <p>Explora nuestra selección tecnológica</p>
+  </div>
+  
+  <div class="product-grid">
+    <lib-product-card 
+      *ngFor="let p of products" 
+      [product]="p">
+    </lib-product-card>
+  </div>
+</div>
