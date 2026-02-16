@@ -1,0 +1,40 @@
+<div class="cart-container">
+  <h2>🛍️ Tu Resumen de Compra</h2>
+
+  @if (cartItems$ | async; as items) {
+    
+    @if (items.length > 0) {
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of items; track item.id) {
+            <tr>
+              <td>{{ item.name }}</td>
+              <td>${{ item.price }}</td>
+            </tr>
+          }
+        </tbody>
+        <tfoot>
+          <tr>
+            <td><strong>TOTAL</strong></td>
+            <td><strong>${{ getTotal(items) }}</strong></td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <button class="btn-pay" (click)="clear()">Pagar Ahora</button>
+    } 
+    
+    @else {
+      <div class="empty">
+        <p>Tu carrito está vacío 😢</p>
+        <p>Ve al catálogo para agregar productos.</p>
+      </div>
+    }
+  }
+</div>
