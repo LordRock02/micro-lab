@@ -1,0 +1,45 @@
+.minimal-container {
+  /* Ocupar toda la altura disponible (menos el header) */
+  min-height: calc(100vh - 64px); 
+  
+  /* Flexbox para centrar todo perfectamente */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  /* Colores (Coinciden con tu Header) */
+  background-color: #1e1e2f; 
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: #a5b4fc; /* Un tono lila suave */
+    margin-bottom: 2rem;
+  }
+
+  button {
+    background-color: #6366f1; /* Índigo */
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background-color: #4f46e5; /* Un poco más oscuro al pasar el mouse */
+    }
+  }
+}
