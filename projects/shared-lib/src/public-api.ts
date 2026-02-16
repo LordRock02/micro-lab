@@ -5,3 +5,4 @@
 export * from './lib/shared-lib.service';
 export * from './lib/shared-lib.component';
 export * from './lib/alert/alert.component';
+export * from './lib/components/header/header.component';

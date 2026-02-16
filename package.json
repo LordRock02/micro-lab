@@ -10,7 +10,8 @@
     "prepare": "husky",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
-    "run:all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js"
+    "run:all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js",
+    "test:prepush": "ng test --watch=false --browsers=ChromeHeadless"
   },
   "private": true,
   "dependencies": {
@@ -41,6 +42,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "karma-spec-reporter": "^0.0.36",
     "lint-staged": "^16.2.7",
     "ng-packagr": "^18.2.0",
     "ngx-build-plus": "^18.0.0",

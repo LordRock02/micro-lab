@@ -1,0 +1,79 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  height: 64px;
+  background-color: #1e1e2f; // Azul oscuro profundo
+  color: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #a5b4fc; // Lila claro
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+
+  a {
+    text-decoration: none;
+    color: #e2e8f0;
+    font-weight: 500;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #ffffff;
+    }
+
+    &.active {
+      color: #6366f1; // Índigo vibrante
+      border-bottom: 2px solid #6366f1;
+    }
+  }
+}
+
+.cart-widget {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  
+  .icon {
+    font-size: 1.5rem;
+  }
+
+  .badge {
+    background-color: #ef4444; // Rojo alerta
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -5px;
+    right: -10px;
+  }
+}
+.navbar {
+  /* 👇 Agrega esta línea mágica */
+  font-family: 'Poppins', sans-serif;
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  height: 64px;
+  background-color: #1e1e2f; 
+  color: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  letter-spacing: 0.5px; /* Un pequeño toque extra de elegancia */
+}

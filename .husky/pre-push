@@ -1,14 +1,17 @@
+#!/bin/sh
+
 # Mandamiento #2: Antes de realizar un push, todos los tests deben pasar exitosamente.
-TEST_OUTPUT=$(npm run test 2>&1)
+echo -e "\n🧪 Ejecutando tests..."
+
+npm run test:prepush
 RESULT=$?
+
 if [ $RESULT -ne 0 ]; then
-    echo "\n❌ Tests failed. Please fix before pushing."
-    echo "\n--- Failed Tests Output ---"
-    echo "$TEST_OUTPUT" | grep -E "FAILED|Error|✗" || echo "$TEST_OUTPUT"
+    echo -e "\n❌ Tests failed. Please fix before pushing."
     exit 1
 fi
 
-echo "\n✅ Tests completados."
+echo -e "\n✅ Tests completados."
 
 # Mandamiento #3 y #4: Ahora solo se sincroniza tu smart branch con todas las ramas principales antes de hacer push.
 # NOTA: Este script ya no sincroniza las ramas principales entre sí en cascada (main → release/laboratory2 → laboratory → integration).
@@ -18,18 +21,21 @@ MAIN_BRANCHES=("main" "release/laboratory2" "laboratory" "integration")
 
 # Solo ejecuta el flujo si NO estás en una rama principal
 if [[ "$CURRENT_BRANCH" != "integration" && "$CURRENT_BRANCH" != "laboratory" && "$CURRENT_BRANCH" != "release/laboratory2" && "$CURRENT_BRANCH" != "main" ]]; then
+
   STASH_CREATED=0
+
   if [ -n "$(git status --porcelain)" ]; then
     git stash -u
     STASH_CREATED=1
   fi
 
   for BRANCH in "${MAIN_BRANCHES[@]}"; do
-    echo "\n🔄 Sincronizando con origin/$BRANCH..."
+    echo -e "\n🔄 Sincronizando con origin/$BRANCH..."
     git pull --no-rebase origin $BRANCH
     PULL_RESULT=$?
+
     if [ $PULL_RESULT -ne 0 ]; then
-      echo "\n❌ Conflictos o error al hacer pull de '$BRANCH'. Resuélvelos antes de hacer push."
+      echo -e "\n❌ Conflictos o error al hacer pull de '$BRANCH'. Resuélvelos antes de hacer push."
       [ $STASH_CREATED -eq 1 ] && git stash pop
       exit 1
     fi
@@ -38,9 +44,10 @@ if [[ "$CURRENT_BRANCH" != "integration" && "$CURRENT_BRANCH" != "laboratory" &&
   if [ $STASH_CREATED -eq 1 ]; then
     git stash pop
   fi
+
 else
-  echo "\nℹ️ Estás en una rama principal. Solo se recomienda sincronizar desde una smart branch."
-  echo "\nℹ️ You are on a main branch. Synchronization is only recommended from a smart branch."
+  echo -e "\nℹ️ Estás en una rama principal. Solo se recomienda sincronizar desde una smart branch."
+  echo -e "\nℹ️ You are on a main branch. Synchronization is only recommended from a smart branch."
 fi
 
-echo "\n✅ Sincronización completada: tu smart branch está ahora actualizada con todas las ramas principales. Puedes hacer push y abrir el PR."
+echo -e "\n✅ Sincronización completada: tu smart branch está ahora actualizada con todas las ramas principales. Puedes hacer push y abrir el PR."
