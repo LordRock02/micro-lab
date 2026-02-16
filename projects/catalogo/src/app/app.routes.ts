@@ -1,4 +1,9 @@
 import { Routes } from '@angular/router';
-import { AppComponent } from './app.component';
+import { ListComponent } from './list/list.component'; // Importar
 
-export const routes: Routes = [{ path: '', component: AppComponent }];
+export const routes: Routes = [
+  {
+    path: '', // Ruta raíz del microservicio
+    component: ListComponent
+  }
+];
