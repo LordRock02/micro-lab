@@ -1,20 +1,23 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Importante para formatear moneda (pipe currency)
+import { Component, Input, inject } from '@angular/core'; // 👈 Agrega inject
+import { CommonModule } from '@angular/common';
 import { Product } from '../../models/product.interface';
+import { CartService } from '../../services/cart.service'; // 👈 Importa el servicio
 
 @Component({
   selector: 'lib-product-card',
   standalone: true,
-  imports: [CommonModule], 
+  imports: [CommonModule],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss'
 })
 export class ProductCardComponent {
-  // El signo ! indica que este valor vendrá obligatoriamente desde el padre
   @Input() product!: Product;
+  
+  // 👇 Inyección moderna de dependencias
+  private cartService = inject(CartService);
 
   addToCart() {
-    console.log('Agregado al carrito:', this.product.name);
-    // Más adelante conectaremos esto con el servicio real
+    // Llamamos al cerebro para guardar el producto
+    this.cartService.addToCart(this.product);
   }
 }

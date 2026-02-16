@@ -1,22 +1,26 @@
 #!/bin/sh
 
+# Fail fast con mensaje claro
+die() {
+  echo -e "\n❌ $1"
+  exit 1
+}
+
+run_or_die() {
+  # $1 = mensaje de error
+  # resto = comando
+  ERROR_MSG="$1"
+  shift
+  "$@" || die "$ERROR_MSG"
+}
+
 # Mandamiento #2: Antes de realizar un push, todos los tests deben pasar exitosamente.
 echo -e "\n🧪 Ejecutando tests..."
-
-npm run test:prepush
-RESULT=$?
-
-if [ $RESULT -ne 0 ]; then
-    echo -e "\n❌ Tests failed. Please fix before pushing."
-    exit 1
-fi
-
+run_or_die "Tests failed. Please fix before pushing." npm run test:prepush
 echo -e "\n✅ Tests completados."
 
 # Mandamiento #3 y #4: Ahora solo se sincroniza tu smart branch con todas las ramas principales antes de hacer push.
-# NOTA: Este script ya no sincroniza las ramas principales entre sí en cascada (main → release/laboratory2 → laboratory → integration).
-# Si este cambio de workflow es intencional, documenta explícitamente la modificación en la descripción del PR.
-CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD) || die "No se pudo detectar la rama actual."
 MAIN_BRANCHES=("main" "release/laboratory2" "laboratory" "integration")
 
 # Solo ejecuta el flujo si NO estás en una rama principal
@@ -25,24 +29,20 @@ if [[ "$CURRENT_BRANCH" != "integration" && "$CURRENT_BRANCH" != "laboratory" &&
   STASH_CREATED=0
 
   if [ -n "$(git status --porcelain)" ]; then
-    git stash -u
+    echo -e "\n📦 Cambios locales detectados. Guardando stash..."
+    run_or_die "No se pudo crear el stash." git stash -u
     STASH_CREATED=1
   fi
 
   for BRANCH in "${MAIN_BRANCHES[@]}"; do
     echo -e "\n🔄 Sincronizando con origin/$BRANCH..."
-    git pull --no-rebase origin $BRANCH
-    PULL_RESULT=$?
-
-    if [ $PULL_RESULT -ne 0 ]; then
-      echo -e "\n❌ Conflictos o error al hacer pull de '$BRANCH'. Resuélvelos antes de hacer push."
-      [ $STASH_CREATED -eq 1 ] && git stash pop
-      exit 1
-    fi
+    run_or_die "Conflictos o error al hacer pull de '$BRANCH'. Resuélvelos antes de hacer push." \
+      git pull --no-rebase origin "$BRANCH"
   done
 
   if [ $STASH_CREATED -eq 1 ]; then
-    git stash pop
+    echo -e "\n📦 Restaurando stash..."
+    run_or_die "No se pudo restaurar el stash (git stash pop)." git stash pop
   fi
 
 else

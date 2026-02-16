@@ -14,18 +14,19 @@
     "declaration": false,
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
-    "paths": {
-      "shared-lib": [
-        "./dist/shared-lib"
-      ]
-    },
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "baseUrl": "./", 
+    "paths": {
+      "shared-lib": [
+        "./projects/shared-lib/src/public-api.ts"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
