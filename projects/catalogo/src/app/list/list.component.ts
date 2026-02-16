@@ -1,18 +1,17 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// 👇 Importamos tus creaciones de la librería compartida
-import { ProductCardComponent, Product } from '../../../../shared-lib/src/public-api';
+// 👇 AQUÍ ESTÁ LA MAGIA: Usamos el nombre 'shared-lib' en vez de la ruta larga
+import { ProductCardComponent, Product } from 'shared-lib'; 
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, ProductCardComponent], // <--- Necesario para usar la etiqueta <lib-product-card>
+  imports: [CommonModule, ProductCardComponent], 
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
   
-  // Datos de prueba (Mock Data)
   products: Product[] = [
     {
       id: 1,
